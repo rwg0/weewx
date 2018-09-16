@@ -283,8 +283,9 @@ class CumulusSource(weeimport.Source):
 
 
     def getExtraDataFile(self, period):
-        yr = period[3:5]
-        month = self.monthNameToNumber(period[0:3])
+        fname = os.path.basename(period)
+        yr = fname[3:5]
+        month = self.monthNameToNumber(fname[0:3])
         return 'ExtraLog20' & yr & month & '.txt'
     
 
