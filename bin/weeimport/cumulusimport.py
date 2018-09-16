@@ -63,7 +63,11 @@ class CumulusSource(weeimport.Source):
                    'lastest_wind_gust', 'cur_windchill', 'cur_heatindex',
                    'cur_uv', 'cur_solar', 'cur_et', 'annual_et',
                    'cur_app_temp', 'cur_tmax_solar', 'day_sunshine_hours',
-                   'cur_wind_bearing', 'day_rain_rg11', 'midnight_rain']
+                   'cur_wind_bearing', 'day_rain_rg11', 'midnight_rain', 
+                   'extra_date', 'extra_time', 
+                   'T0','T1','T2','T3','T4','T5','T6','T7','T8','T9',
+                   'RH0','RH1','RH2','RH3','RH4','RH5','RH6','RH7','RH8','RH9',
+                   ]
     # Dict to map all possible Cumulus field names (refer _field_list) to weeWX
     # archive field names and units.
     _header_map = {'datetime': {'units': 'unix_epoch', 'map_to': 'dateTime'},
@@ -84,7 +88,11 @@ class CumulusSource(weeimport.Source):
                    'cur_solar': {'units': 'watt_per_meter_squared',
                                  'map_to': 'radiation'},
                    'cur_uv': {'units': 'uv_index', 'map_to': 'UV'},
-                   'cur_app_temp': {'map_to': 'appTemp'}
+                   'cur_app_temp': {'map_to': 'appTemp'},
+                   'extraTemp1': {'map_to': 'T1'},
+                   'extraTemp2': {'map_to': 'T2'},
+                   'extraHumid1': {'map_to': 'RH1'},
+                   'extraHumid2': {'map_to': 'RH2'},
                    }
 
     def __init__(self, config_dict, config_path, cumulus_config_dict, import_config_path, options, log):
@@ -257,6 +265,29 @@ class CumulusSource(weeimport.Source):
         if self.dry_run:
             print "This is a dry run, imported data will not be saved to archive."
 
+    def monthNameToNumber(name):
+        return {
+            'Jan': '01',
+            'Feb': '02',
+            'Mar': '03',
+            'Apr': '04',
+            'May': '05',
+            'Jun': '06',
+            'Jul': '07',
+            'Aug': '08',
+            'Sep': '09',
+            'Oct': '10',
+            'Nov': '11',
+            'Dec': '12',
+        }[name]
+
+
+    def getExtraDataFile(period):
+        yr = period[3:5]
+        month = monthNameToNumber(period[0:3])
+        return 'ExtraLog20' & yr & month & '.txt'
+    
+
     def getRawData(self, period):
         """Get raw observation data and construct a map from Cumulus monthly
             log fields to weeWX archive fields.
@@ -276,6 +307,16 @@ class CumulusSource(weeimport.Source):
         if os.path.isfile(period):
             with open(period, 'r') as f:
                 _raw_data = f.readlines()
+            extra_data_file=getExtraDataFile(period)
+            if os.path.isfile(extra_data_file):
+                with open(extra_data_file, 'r') as f:
+                    extra_data = f.readlines()
+                    if (len(extra_data) == len(_raw_data)):
+                        joined = []
+                        for it in zip(_raw_data, extra_data):
+                            joined.append(it[0] & ',' & it[1])
+                        _raw_data = it
+
         else:
             # If it doesn't we can't go on so raise it
             raise weeimport.WeeImportIOError(
