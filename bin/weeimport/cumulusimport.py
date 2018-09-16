@@ -162,6 +162,17 @@ class CumulusSource(weeimport.Source):
                 self._header_map['cur_heatindex']['units'] = temp_u
                 self._header_map['cur_windchill']['units'] = temp_u
                 self._header_map['cur_app_temp']['units'] = temp_u
+                self._header_map['T0']['units'] = temp_u
+                self._header_map['T1']['units'] = temp_u
+                self._header_map['T2']['units'] = temp_u
+                self._header_map['T3']['units'] = temp_u
+                self._header_map['T4']['units'] = temp_u
+                self._header_map['T5']['units'] = temp_u
+                self._header_map['T6']['units'] = temp_u
+                self._header_map['T7']['units'] = temp_u
+                self._header_map['T8']['units'] = temp_u
+                self._header_map['T9']['units'] = temp_u
+
             else:
                 _msg = "Unknown units '%s' specified for Cumulus temperature fields in %s." % (temp_u,
                                                                                                self.import_config_path)
