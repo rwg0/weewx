@@ -286,7 +286,7 @@ class CumulusSource(weeimport.Source):
         fname = os.path.basename(period)
         yr = fname[3:5]
         month = self.monthNameToNumber(fname[0:3])
-        return 'ExtraLog20' + yr + month + '.txt'
+        return  os.path.dirname(period) + '/ExtraLog20' + yr + month + '.txt'
     
 
     def getRawData(self, period):
