@@ -321,7 +321,7 @@ class CumulusSource(weeimport.Source):
                         _raw_data = joined
                     else:
                         print "extra data had wrong length"
-                        print "main data length : %0, extra data length : %1" % (len(_raw_data) , len(extra_data))
+                        print "main data length : %d , extra data length : %d" % (len(_raw_data) , len(extra_data))
             else:
                 print "extra data file not found : " + extra_data_file
 
