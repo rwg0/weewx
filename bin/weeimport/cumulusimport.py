@@ -91,8 +91,8 @@ class CumulusSource(weeimport.Source):
                    'cur_app_temp': {'map_to': 'appTemp'},
                    'T1': {'map_to': 'extraTemp1'},
                    'T2': {'map_to': 'extraTemp2'},
-                   'RH1': {'map_to': 'extraHumid1'},
-                   'RH2': {'map_to': 'extraHumid2'},
+                   'RH1': {'map_to': 'extraHumid1', 'units': 'percent'},
+                   'RH2': {'map_to': 'extraHumid2', 'units': 'percent'},
                    }
 
     def __init__(self, config_dict, config_path, cumulus_config_dict, import_config_path, options, log):
