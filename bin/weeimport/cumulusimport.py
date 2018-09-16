@@ -317,6 +317,10 @@ class CumulusSource(weeimport.Source):
                         for it in zip(_raw_data, extra_data):
                             joined.append(it[0] & ',' & it[1])
                         _raw_data = it
+                    else:
+                        print "extra data had wrong length"
+            else:
+                print "extra data file not found : " + extra_data_file
 
         else:
             # If it doesn't we can't go on so raise it
