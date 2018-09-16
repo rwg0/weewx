@@ -315,7 +315,7 @@ class CumulusSource(weeimport.Source):
                     if (len(extra_data) == len(_raw_data)):
                         joined = []
                         for it in zip(_raw_data, extra_data):
-                            joined.append(it[0] & ',' & it[1])
+                            joined.append(it[0] + ',' + it[1])
                         _raw_data = it
                     else:
                         print "extra data had wrong length"
