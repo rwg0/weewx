@@ -265,7 +265,7 @@ class CumulusSource(weeimport.Source):
         if self.dry_run:
             print "This is a dry run, imported data will not be saved to archive."
 
-    def monthNameToNumber(name):
+    def monthNameToNumber(self, name):
         return {
             'Jan': '01',
             'Feb': '02',
@@ -282,9 +282,9 @@ class CumulusSource(weeimport.Source):
         }[name]
 
 
-    def getExtraDataFile(period):
+    def getExtraDataFile(self, period):
         yr = period[3:5]
-        month = monthNameToNumber(period[0:3])
+        month = self.monthNameToNumber(period[0:3])
         return 'ExtraLog20' & yr & month & '.txt'
     
 
@@ -307,7 +307,7 @@ class CumulusSource(weeimport.Source):
         if os.path.isfile(period):
             with open(period, 'r') as f:
                 _raw_data = f.readlines()
-            extra_data_file=getExtraDataFile(period)
+            extra_data_file=self.getExtraDataFile(period)
             if os.path.isfile(extra_data_file):
                 with open(extra_data_file, 'r') as f:
                     extra_data = f.readlines()
