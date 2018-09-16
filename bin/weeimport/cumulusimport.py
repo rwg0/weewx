@@ -89,10 +89,10 @@ class CumulusSource(weeimport.Source):
                                  'map_to': 'radiation'},
                    'cur_uv': {'units': 'uv_index', 'map_to': 'UV'},
                    'cur_app_temp': {'map_to': 'appTemp'},
-                   'extraTemp1': {'map_to': 'T1'},
-                   'extraTemp2': {'map_to': 'T2'},
-                   'extraHumid1': {'map_to': 'RH1'},
-                   'extraHumid2': {'map_to': 'RH2'},
+                   'T1': {'map_to': 'extraTemp1'},
+                   'T2': {'map_to': 'extraTemp2'},
+                   'RH1': {'map_to': 'extraHumid1'},
+                   'RH2': {'map_to': 'extraHumid2'},
                    }
 
     def __init__(self, config_dict, config_path, cumulus_config_dict, import_config_path, options, log):
@@ -162,8 +162,8 @@ class CumulusSource(weeimport.Source):
                 self._header_map['cur_heatindex']['units'] = temp_u
                 self._header_map['cur_windchill']['units'] = temp_u
                 self._header_map['cur_app_temp']['units'] = temp_u
-                self._header_map['extraTemp1']['units'] = temp_u
-                self._header_map['extraTemp2']['units'] = temp_u
+                self._header_map['T1']['units'] = temp_u
+                self._header_map['T2']['units'] = temp_u
             else:
                 _msg = "Unknown units '%s' specified for Cumulus temperature fields in %s." % (temp_u,
                                                                                                self.import_config_path)
